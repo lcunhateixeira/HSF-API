@@ -1,0 +1,18 @@
+insert into ubs (cidade, cnes, nome_fantasia, endereco, latitude, longitude) values('Araranguá','2624338','PSF HERCILIO LUZ','RUA ORGE LACERDA - 213  HERCILIO LUZ','-28.90937','-49.36423');
+insert into ubs (cidade, cnes, nome_fantasia, endereco, latitude, longitude) values('Araranguá','2305453','PSF MATO ALTO LAGOAO','RUA DORVALINA BROCA PASQUALI - 813  MATO ALTO','-28.93575','-49.48096');
+insert into ubs (cidade, cnes, nome_fantasia, endereco, latitude, longitude) values('Araranguá','2305232','PSF POLICIA RODOVIARIA','RUA MARCELO TODESCHINI - 0  POLICIA RODOVIARIA','-28.97426','-49.52801');
+insert into ubs (cidade, cnes, nome_fantasia, endereco, latitude, longitude) values('Araranguá','2624362','PSF JARDIM CIBELE','RUA JOAQUIM CRISTIANO DE MEDEIROS - 353  JARDIM CIBELE','-28.94327','-49.51226');
+insert into ubs (cidade, cnes, nome_fantasia, endereco, latitude, longitude) values('Araranguá','2305461','PSF URUSSANGUINHA','RUA GUILHERME KRETEHMANN - 193  URUSSANGUINHA','-28.93575','-49.48096');
+insert into ubs (cidade, cnes, nome_fantasia, endereco, latitude, longitude) values('Araranguá','2305194','PSF SANGA DA AREIA','MANOEL PATRICIO CANDIDO TEIXIERA - 64  SANGA DA AREIA','-28.99374','-49.55194');
+insert into ubs (cidade, cnes, nome_fantasia, endereco, latitude, longitude) values('Araranguá','2305224','PSF JARDIM DAS AVENIDAS','RUA FLORES DE LARANJEIRAS - 0  JARDIM DAS AVENIDAS','-28.93575','-49.48096');
+insert into ubs (cidade, cnes, nome_fantasia, endereco, latitude, longitude) values('Araranguá','2305259','PSF COLONINHA','RUA IVO DE ALMEIDA MACHADO - 90  COLONINHA','-28.93575','-49.48096');
+insert into ubs (cidade, cnes, nome_fantasia, endereco, latitude, longitude) values('Araranguá','7514972','AMBULATORIO DE SAUDE MENTAL E DEPENDENCIA QUIMICA','CORONEL APOLINARIO PEREIRA - 01  CENTRO','-28.93418','-49.48486');
+insert into ubs (cidade, cnes, nome_fantasia, endereco, latitude, longitude) values('Araranguá','2305267','PSF DIVINEIA','RODOVIA JORGE LACERDA - 1145  DIVINEIA','-28.93575','-49.48096');
+insert into ubs (cidade, cnes, nome_fantasia, endereco, latitude, longitude) values('Araranguá','2624354','PSF SANGA DA TOCA','SERAFIM MANOEL DE SOUZA - 165  SANGA DA TOCA','-29.02288','-49.60297');
+insert into ubs (cidade, cnes, nome_fantasia, endereco, latitude, longitude) values('Araranguá','2624370','PSF CIDADE ALTA','GIACOMO MAZZUCO - 43  CIDADE ALTA','-28.94542','-49.49617');
+insert into ubs (cidade, cnes, nome_fantasia, endereco, latitude, longitude) values('Araranguá','2305240','PSF VILA SAO JOSE','RUA PREFEITO ANTONIO RAUPP - 197  VILA SAO JOSE','-28.92559','-49.48167');
+insert into ubs (cidade, cnes, nome_fantasia, endereco, latitude, longitude) values('Araranguá','2305127','P S ITOUPABA','ESTRADA GERAL - S/N  ITOUPAVA','-28.97129','-49.50462');
+insert into ubs (cidade, cnes, nome_fantasia, endereco, latitude, longitude) values('Araranguá','02305232','PSF POLICIA RODOVIARIA','RUA MARCELO TODESCHINI - 0  POLICIA RODOVIARIA','-28.97426','-49.52801');
+insert into ubs (cidade, cnes, nome_fantasia, endereco, latitude, longitude) values('Araranguá','2624346','PSF COLONINHA II','RUA IVO ALMEIDA MACHADO - S/N  COLONINHA','-28.93612','-49.4923');
+insert into ubs (cidade, cnes, nome_fantasia, endereco, latitude, longitude) values('Araranguá','2305151','PSF MORRO DOS CONVENTOS','RODOVIA MUNICIPAL VALMIRO MANOEL GONCALVES - 8040  MORRO DOS CONVENTOS','-28.94217','-49.37727');
+insert into ubs (cidade, cnes, nome_fantasia, endereco, latitude, longitude) values('Araranguá','2305216','P S SANGA DO MARCO','EST GERAL - S/N  SANGA DO MARCO','-28.89607','-49.50254');
