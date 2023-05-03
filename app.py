@@ -48,6 +48,7 @@ def adiciona_usuario(form: UsuarioSchema):
         logger.error(f"Erro ao adicionar usuário: {e}")
         return {"message": "Usuário já existe"}, 409
 
+
 @app.get('/usuarios', tags=[usuario_tag],
         responses={"200": ListagemUsuarioSchema, "400": ErrorSchema})
 def get_usuarios():
@@ -70,7 +71,6 @@ def get_usuarios():
         responses={"200": UBSViewSchema, "409": ErrorSchema, "400": ErrorSchema})
 def add_ubs(form: UBSSchema):
     """Adiciona uma nova UBS à base de dados
-
     Retorna uma representação da UBS.
     """
     ubs = UBS(
@@ -103,7 +103,6 @@ def add_ubs(form: UBSSchema):
         )
         
         return apresenta_ubs(usb_schema), 200
-
     except IntegrityError as e:
         # A duplicidade do cnes é a provável razão do IntegrityError
         error_msg = "UBS de mesmo cnes já salva na base :/"
@@ -115,31 +114,6 @@ def add_ubs(form: UBSSchema):
         error_msg = f"Não foi possível salvar a nova UBS, exception '{e}' :/"
         logger.warning(f"Erro ao adicionar Unidade Básica de Saúde '{ubs.nome_fantasia}', {error_msg}")
         return {"mesage": error_msg}, 400
-
-
-# @app.get('/ubs', tags=[ubs_tag],
-#         responses={"200": UBSSchema, "404": ErrorSchema, "400": ErrorSchema})
-# def get_ubs(query: UBSSchema):
-#     """ Retorna uma representação da UBS com o cnes passado como parâmetro.
-#     """
-#     cnes = query.cnes
-#     logger.debug(f"Buscando UBS com cnes: '{cnes}'")
-#     try:
-#         # criando conexão com a base
-#         session = Session()
-#         # buscando UBS
-#         ubs = session.query(UBS).filter(UBS.cnes == cnes).first()        
-#         if ubs:
-#             return apresenta_ubs(ubs), 200
-#         else:
-#             error_msg = f"UBS com cnes '{cnes}' não encontrada :/"
-#             logger.warning(f"Erro ao buscar UBS com cnes: '{cnes}', {error_msg}")
-#             return {"mesage": error_msg}, 404
-#     except Exception as e:
-#         # caso um erro fora do previsto
-#         error_msg = f"Não foi possível buscar a UBS com cnes '{cnes}', exception '{e}' :/"
-#         logger.warning(f"Erro ao buscar UBS com cnes: '{cnes}', {error_msg}")
-#         return {"mesage": error_msg}, 400
 
 
 @app.get('/ubses', tags=[ubs_tag],
@@ -170,11 +144,11 @@ def get_ubses():
         logger.warning(f"Erro ao listar UBSes, {error_msg}")
         return {"mesage": error_msg}, 400
 
+
 @app.post('/registro', tags=[registro_tag], 
           responses={"200": RegistroViewSchema, "409": ErrorSchema, "400": ErrorSchema})
 def registra_entrada_saida(form: RegistroSchema):
     """Inclui um registro de entrada ou saída de um usuário na UBS
-
     Args:
         form (RegistroViewSchema): _description_
     """
