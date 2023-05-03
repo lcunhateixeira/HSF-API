@@ -11,13 +11,13 @@ class UBSSchema(BaseModel):
     """ Define como uma nova UBS deve ser representada
     """
     id: int = 1
-    nome_fantasia: str = "Centro de Saúde Tapera"
-    endereco: str = "Rua Tapera, 123"
-    cidade: str = "São Paulo"
-    latitude: str = "-23.123456"
-    longitude: str = "-45.123456"
-    telefone: str = "11987654321"
-    cnes: str = "1234567"
+    nome_fantasia: str = "PSF HERCILIO LUZ"
+    endereco: str = "RUA ORGE LACERDA - 213  HERCILIO LUZ"
+    cidade: str = "Araranguá"
+    latitude: str = "-28.90937"
+    longitude: str = "-49.36423"
+    telefone: str = "(48)99999-0000"
+    cnes: str = "2624338"
     fila: int = 0
     registros: List[RegistroSchema] = []
         
@@ -25,13 +25,13 @@ class UBSViewSchema(BaseModel):
     """ Define como uma nova UBS deve ser representada
     """
     id: int = 1
-    nome_fantasia: str = "Centro de Saúde Tapera"
-    endereco: str = "Rua Tapera, 123"
-    cidade: str = "São Paulo"
-    latitude: str = "-23.123456"
-    longitude: str = "-45.123456"
-    telefone: str = "11987654321"
-    cnes: str = "1234567"
+    nome_fantasia: str = "PSF HERCILIO LUZ"
+    endereco: str = "RUA ORGE LACERDA - 213  HERCILIO LUZ"
+    cidade: str = "Araranguá"
+    latitude: str = "-28.90937"
+    longitude: str = "-49.36423"
+    telefone: str = "(48)99999-0000"
+    cnes: str = "2624338"
     fila: int = 0
     movimentacao_mes: str = "10"
     media_movimentacao_diaria: str = "0.33"
@@ -71,7 +71,7 @@ def apresenta_ubs(ubs:UBS) -> UBSViewSchema:
         'cnes': ubs.cnes,
         'fila': ubs.fila,
         'movimentacao_mes': movimentacoes_mes,
-        'media_movimentacao_diaria': media_movimentacao_diaria,
+        'media_movimentacao_diaria': '%.2f'% media_movimentacao_diaria,
     }
 
 class ListagemUBSSchema(BaseModel):

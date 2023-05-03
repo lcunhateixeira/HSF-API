@@ -9,8 +9,8 @@ class RegistroSchema(BaseModel):
     """
     data_entrada: Optional[datetime] = None
     data_saida: Optional[datetime] = None
-    ubs_id: int = None
-    usuario_id: int = None
+    ubs_id: int = 1
+    usuario_id: int = 1
     
 class RegistroViewSchema(BaseModel):
     """ Define a apresentação de um registro de entrada e saída 
