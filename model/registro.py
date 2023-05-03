@@ -18,7 +18,6 @@ class Registro(Base):
     def __init__(self, usuario_id: int, ubs_id: int, data_entrada:Union[DateTime, None] = None, data_saida:Union[DateTime, None] = None):
         """
         Cria um histórico de registro de entrada ou saída da Unidade de Saída
-
         Arguments:
             data_registro: data de entrada e saída da fila à base
         """    
