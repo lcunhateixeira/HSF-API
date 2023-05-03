@@ -11,16 +11,16 @@ from logger import logger
 from schemas import *
 from flask_cors import CORS
 
-info = Info(title="Minha API", version="1.0.0")
+info = Info(title="API - Hospital Sem Fila", version="1.0.0")
 app = OpenAPI(__name__, info=info)
 CORS(app)
 
 
 # definindo tags
 home_tag = Tag(name="Documentação", description="Seleção de documentação: Swagger, Redoc ou RapiDoc")
-ubs_tag = Tag(name="UBS", description="Adição, visualização e remoção de UBS à base")
-registro_tag = Tag(name="Registro", description="Adição, visualização e remoção de registro de entrada e saída na UBS à base")
-usuario_tag = Tag(name="Usuário", description="Adição, visualização e remoção de registro de entrada e saída na UBS à base")
+ubs_tag = Tag(name="UBS", description="Adição e listagem de Unidades Básicas de Saúde")
+registro_tag = Tag(name="Registro", description="Registro de entrada e saída de usuários nas Unidades Básicas de Saúdes")
+usuario_tag = Tag(name="Usuário", description="Adição e listagem de Usuários")
 
 @app.get('/', tags=[home_tag])
 def home():
@@ -75,8 +75,8 @@ def add_ubs(form: UBSSchema):
     """
     ubs = UBS(
         nome_fantasia = form.nome_fantasia,
-        endereco = form.endereco,
         cidade = form.cidade,
+        endereco = form.endereco,
         latitude = form.latitude,
         longitude = form.longitude,
         telefone = form.telefone,
@@ -95,7 +95,6 @@ def add_ubs(form: UBSSchema):
         usb_schema = UBSSchema(
             nome_fantasia = ubs.nome_fantasia,
             endereco = ubs.endereco,
-            cidade = ubs.cidade,
             latitude = ubs.latitude,
             longitude = ubs.longitude,
             telefone = ubs.telefone,
@@ -118,29 +117,29 @@ def add_ubs(form: UBSSchema):
         return {"mesage": error_msg}, 400
 
 
-@app.get('/ubs', tags=[ubs_tag],
-        responses={"200": UBSSchema, "404": ErrorSchema, "400": ErrorSchema})
-def get_ubs(query: UBSSchema):
-    """ Retorna uma representação da UBS com o cnes passado como parâmetro.
-    """
-    cnes = query.cnes
-    logger.debug(f"Buscando UBS com cnes: '{cnes}'")
-    try:
-        # criando conexão com a base
-        session = Session()
-        # buscando UBS
-        ubs = session.query(UBS).filter(UBS.cnes == cnes).first()        
-        if ubs:
-            return apresenta_ubs(ubs), 200
-        else:
-            error_msg = f"UBS com cnes '{cnes}' não encontrada :/"
-            logger.warning(f"Erro ao buscar UBS com cnes: '{cnes}', {error_msg}")
-            return {"mesage": error_msg}, 404
-    except Exception as e:
-        # caso um erro fora do previsto
-        error_msg = f"Não foi possível buscar a UBS com cnes '{cnes}', exception '{e}' :/"
-        logger.warning(f"Erro ao buscar UBS com cnes: '{cnes}', {error_msg}")
-        return {"mesage": error_msg}, 400
+# @app.get('/ubs', tags=[ubs_tag],
+#         responses={"200": UBSSchema, "404": ErrorSchema, "400": ErrorSchema})
+# def get_ubs(query: UBSSchema):
+#     """ Retorna uma representação da UBS com o cnes passado como parâmetro.
+#     """
+#     cnes = query.cnes
+#     logger.debug(f"Buscando UBS com cnes: '{cnes}'")
+#     try:
+#         # criando conexão com a base
+#         session = Session()
+#         # buscando UBS
+#         ubs = session.query(UBS).filter(UBS.cnes == cnes).first()        
+#         if ubs:
+#             return apresenta_ubs(ubs), 200
+#         else:
+#             error_msg = f"UBS com cnes '{cnes}' não encontrada :/"
+#             logger.warning(f"Erro ao buscar UBS com cnes: '{cnes}', {error_msg}")
+#             return {"mesage": error_msg}, 404
+#     except Exception as e:
+#         # caso um erro fora do previsto
+#         error_msg = f"Não foi possível buscar a UBS com cnes '{cnes}', exception '{e}' :/"
+#         logger.warning(f"Erro ao buscar UBS com cnes: '{cnes}', {error_msg}")
+#         return {"mesage": error_msg}, 400
 
 
 @app.get('/ubses', tags=[ubs_tag],
@@ -183,6 +182,7 @@ def registra_entrada_saida(form: RegistroSchema):
     try:        
         # criando conexão com a base
         logger.debug("Criando conexão com a base")
+        novo_registro = None
         session = Session()
         #verificar se usuário já está na fila
         registro = session.query(Registro).filter(
@@ -192,22 +192,19 @@ def registra_entrada_saida(form: RegistroSchema):
                                 )
                             ).first()
         #Se já está na fila, atualiza data de saída ou data de entrada
-        if registro and registro.ubs_id == form.ubs_id:
-            print("Já está na fila da ubs selecionada")
+        if registro and registro.ubs_id == form.ubs_id:            
             #registra saída e retira da fila da ubs
             registro.data_saida = datetime.now()
             registro.ubs.diminui_fila()
+            novo_registro = registro
             session.add(registro) 
         else:
             #Se o usuário tinha registro de entrada em outra ubs, dimimui a fila da ubs e atualiza data de saída do registro 
             if registro:
-                print("Já está na fila mas em outra ubs")
                 registro.ubs.diminui_fila()
                 registro.data_saida = datetime.now()
                 session.add(registro)
-            #Cria novo registro
-            print("Não está em nenhuma fila")
-            novo_registro = None
+            #Cria novo registro de entrada
             novo_registro  = Registro(
                 data_entrada = datetime.now(),
                 data_saida = None,
@@ -225,13 +222,13 @@ def registra_entrada_saida(form: RegistroSchema):
         logger.debug("Efetivando o comando de adição do novo registro na tabela")
         session.commit()
         logger.debug("apresentando registro de entrada ou saída")
-        return apresenta_registro(registro), 200
+        return apresenta_registro(novo_registro), 200
         
     except IntegrityError as e:
         error_msg = "Erro de integridade ao adicionar registro de entrada ou saída :/"
-        logger.warning(f"Erro ao adicionar registro  '{registro.data_entrada}', '{registro.data_saida}', ubs_id: '{registro.ubs_id}', {error_msg}")
+        logger.warning(f"Erro ao adicionar registro ubs_id: '{form.ubs_id}', user_id: '{form.usuario_id}', {error_msg}")
         return {"mesage": error_msg}, 409
     except Exception as e:
         error_msg = f"Não foi possível salvar o novo registro de entrada ou saída '{e}':/"
-        logger.warning(f"Erro ao adicionar registro de entrada e saida '{registro.data_entrada}', '{registro.data_saida}', ubs_id: '{registro.ubs_id}', {error_msg}")
+        logger.warning(f"Erro ao adicionar registro ubs_id: '{form.ubs_id}', user_id: '{form.usuario_id}', {error_msg}")
         return {"mesage": error_msg}, 400
